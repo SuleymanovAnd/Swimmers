@@ -6,7 +6,7 @@ set(SOURCE
         main.cpp
         )
 set(INCLUDE
-        ${MY_DIRECTORY}/
+        ${MY_DIRECTORY}/swimmers.h
         )
 
 
