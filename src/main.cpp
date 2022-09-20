@@ -2,7 +2,8 @@
 #include "swimmers.h"
 #include <thread>
 
-void swim (Swimmer swmr) {
+
+void swim (Swimmer& swmr) {
     int time = 1;
     while (!swmr.swimmerFinish()){
         std::this_thread::sleep_for (std::chrono::seconds (1));
@@ -23,13 +24,12 @@ int main() {
     Swimmer Sportsman5 = *new Swimmer (); std::cout << "Swimmer 6." <<std::endl;
     Swimmer Sportsman6 = *new Swimmer ();
 
-
-    std::thread sportsmanSwim(swim, Sportsman1);
-    std::thread sportsmanSwim2(swim, Sportsman2);
-    std::thread sportsmanSwim3(swim, Sportsman3);
-    std::thread sportsmanSwim4(swim, Sportsman4);
-    std::thread sportsmanSwim5(swim, Sportsman5);
-    std::thread sportsmanSwim6(swim, Sportsman6);
+    std::thread sportsmanSwim(swim, std::ref( Sportsman1));
+    std::thread sportsmanSwim2(swim, std::ref (Sportsman2));
+    std::thread sportsmanSwim3(swim, std::ref (Sportsman3));
+    std::thread sportsmanSwim4(swim, std::ref (Sportsman4));
+    std::thread sportsmanSwim5(swim, std::ref (Sportsman5));
+    std::thread sportsmanSwim6(swim, std::ref (Sportsman6));
 
     sportsmanSwim.join ();
     sportsmanSwim2.join ();
