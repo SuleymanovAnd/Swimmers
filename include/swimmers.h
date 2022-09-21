@@ -3,7 +3,7 @@
 class Swimmer {
     std::string swimmerName;
     int speedOfSwim;
-    int currentPosition;
+    int currentPosition = 0;
     int totalTime = 0;
 
     void setName (){
