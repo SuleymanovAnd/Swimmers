@@ -2,7 +2,10 @@
 #include "swimmers.h"
 #include <thread>
 #include <mutex>
+
 #define fastest(a,b) (((a)<(b))?(a):(b))
+#define fastestName(a,b,c,d) (((a)<(b))?(c):(d))
+
 void swim (Swimmer& swmr, std::mutex &mtx) {
     int time = 1;
     while (!swmr.swimmerFinish()){
@@ -43,43 +46,59 @@ int main() {
     sportsmanSwim5.join ();
     sportsmanSwim6.join ();
 
-    int FinishingOrder [6];
+    int FinishingOrder [6] = {10000,10000,10000,10000,10000,10000};
     std::string FinishingOrderName [6];
 
     for (int i = 0; i <6;i++){
 
             for (int j = 0; j <6 ; j++){
-                if (j >6) break;
-                int nextSportsmenTime = 0;
+                int nextSportsmanTime = 0;
+                std::string nextSportsmanName;
                 switch (j){
-                    case 0 : nextSportsmenTime = Sportsman1.getTotalTime();break;
-                    case 1 : nextSportsmenTime = Sportsman2.getTotalTime();break;
-                    case 2 : nextSportsmenTime = Sportsman3.getTotalTime();break;
-                    case 3 : nextSportsmenTime = Sportsman4.getTotalTime();break;
-                    case 4 : nextSportsmenTime = Sportsman5.getTotalTime();break;
-                    case 5 : nextSportsmenTime = Sportsman6.getTotalTime();break;
+                    case 0 : nextSportsmanTime = Sportsman1.getTotalTime(); nextSportsmanName = Sportsman1.getName();break;
+                    case 1 : nextSportsmanTime = Sportsman2.getTotalTime(); nextSportsmanName = Sportsman2.getName();break;
+                    case 2 : nextSportsmanTime = Sportsman3.getTotalTime();nextSportsmanName = Sportsman3.getName();break;
+                    case 3 : nextSportsmanTime = Sportsman4.getTotalTime();nextSportsmanName = Sportsman4.getName();break;
+                    case 4 : nextSportsmanTime = Sportsman5.getTotalTime();nextSportsmanName = Sportsman5.getName();break;
+                    case 5 : nextSportsmanTime = Sportsman6.getTotalTime();nextSportsmanName = Sportsman6.getName();break;
                     default : break;
                 }
-                if (i == 0 && j == 1) { FinishingOrder[i] = fastest (Sportsman1.getTotalTime(), nextSportsmenTime);}
-                else{ if (i >0) {
-                        if ( fastest (FinishingOrder [i], nextSportsmenTime) != FinishingOrder [i-1] ) {
-                            FinishingOrder[i] = fastest (FinishingOrder [i], nextSportsmenTime);
+                if (i == 0 && j == 1) {
+                    FinishingOrder[i] = fastest (Sportsman1.getTotalTime(), nextSportsmanTime);
+                    FinishingOrderName [i] = fastestName (Sportsman1.getTotalTime(), nextSportsmanTime,Sportsman1.getName(),nextSportsmanName);
+                }else{ if (i >0) {
+                        if ( fastest (FinishingOrder [i], nextSportsmanTime) > FinishingOrder [i-1]) {
+                            FinishingOrder[i] = fastest (FinishingOrder [i], nextSportsmanTime);
+                            FinishingOrderName [i] = fastestName (FinishingOrder [i], nextSportsmanTime,FinishingOrderName [i],nextSportsmanName);
+                        } else if (fastest (FinishingOrder [i], nextSportsmanTime) == FinishingOrder [i-1] &&
+                        fastestName (FinishingOrder [i], nextSportsmanTime,FinishingOrderName [i],nextSportsmanName) != FinishingOrderName [i-1]) {
+                            if (i <2){
+                                FinishingOrder [i] = fastest (FinishingOrder [i], nextSportsmanTime) ;
+                                FinishingOrderName [i] = fastestName (FinishingOrder [i], nextSportsmanTime,FinishingOrderName [i],nextSportsmanName);
+                            }else if (fastestName (FinishingOrder [i], nextSportsmanTime,FinishingOrderName [i],nextSportsmanName) != FinishingOrderName [i-2]){
+                                FinishingOrder [i] = fastest (FinishingOrder [i], nextSportsmanTime) ;
+                                FinishingOrderName [i] = fastestName (FinishingOrder [i], nextSportsmanTime,FinishingOrderName [i],nextSportsmanName);
+                            }
                         }
-                     }else {FinishingOrder[i] = fastest (FinishingOrder [i], nextSportsmenTime);}
+                     }else {
+                    FinishingOrder[i] = fastest (FinishingOrder [i], nextSportsmanTime);
+                    FinishingOrderName [i] = fastestName (FinishingOrder [i], nextSportsmanTime,FinishingOrderName [i],nextSportsmanName);
+                }
                 }
 
             }
 
     }
-
+            std::cout << "\nsummary table\n\n";
         for (int i = 0; i < 6; i++){
-            std::cout << " total time : " << FinishingOrder[i] << std::endl;
+            std::cout << FinishingOrderName [i] << " total time : " << FinishingOrder[i] << std::endl;
         }
+        /*
     std::cout << Sportsman1.getName() << " total time : " <<Sportsman1.getTotalTime()<<std::endl;
     std::cout << Sportsman2.getName() << " total time : " <<Sportsman2.getTotalTime()<<std::endl;
     std::cout << Sportsman3.getName() << " total time : " <<Sportsman3.getTotalTime()<<std::endl;
     std::cout << Sportsman4.getName() << " total time : " <<Sportsman4.getTotalTime()<<std::endl;
     std::cout << Sportsman5.getName() << " total time : " <<Sportsman5.getTotalTime()<<std::endl;
     std::cout << Sportsman6.getName() << " total time : " <<Sportsman6.getTotalTime()<<std::endl;
-
+*/
 }
