@@ -91,7 +91,7 @@ int main() {
     }
             std::cout << "\nsummary table\n\n";
         for (int i = 0; i < 6; i++){
-            std::cout << FinishingOrderName [i] << " total time : " << FinishingOrder[i] << std::endl;
+            std::cout << FinishingOrderName [i] << " total time : " << FinishingOrder[i] << " sec." << std::endl;
         }
         /*
     std::cout << Sportsman1.getName() << " total time : " <<Sportsman1.getTotalTime()<<std::endl;
@@ -101,4 +101,6 @@ int main() {
     std::cout << Sportsman5.getName() << " total time : " <<Sportsman5.getTotalTime()<<std::endl;
     std::cout << Sportsman6.getName() << " total time : " <<Sportsman6.getTotalTime()<<std::endl;
 */
+
+
 }

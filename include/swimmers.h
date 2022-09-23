@@ -6,45 +6,17 @@ class Swimmer {
     int currentPosition = 0;
     int totalTime = 0;
 
-    void setName (){
-        std::cout << "Enter name of swimmer: ";
-        std::cin >> swimmerName;
-    }
-
-    void setSpeedOfSwim (){
-        std::cout << "Enter speed of swimmer (M/s) : ";
-        std::cin >> speedOfSwim;
-    }
+    void setName (std::string inName);
+    void setSpeedOfSwim (int inSpeed);
 public:
-    Swimmer () {
-        setName();
-        setSpeedOfSwim();
-    }
+    Swimmer ();
 
-    std::string getName(){
-        return swimmerName;
-    }
-
-    void setTotalTime (int total){
-        totalTime = total;
-    }
-
-    int getTotalTime (){
-        return totalTime;
-    }
-
-    int getCurrentPosition (){
-        return currentPosition;
-    }
-    bool swimmerFinish (){
-        return currentPosition == 100;
-    }
-
-    void setCurrentPosition (int currenTime){
-     if(currentPosition <=100) currentPosition = currenTime *speedOfSwim;
-     if(currentPosition >100) currentPosition = 100;
-    }
+    std::string getName();
+    void setTotalTime (int total);
+    int getTotalTime ();
+    int getCurrentPosition ();
+    bool swimmerFinish ();
+    void setCurrentPosition (int currenTime);
 
     ~Swimmer() = default;
-
 };
